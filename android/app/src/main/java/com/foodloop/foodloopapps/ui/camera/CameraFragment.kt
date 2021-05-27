@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.databinding.FragmentCameraBinding
 import com.foodloop.foodloopapps.databinding.PopupThanksBinding
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -98,7 +97,7 @@ class CameraFragment : Fragment() {
         val storageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
-    private fun saveImageInFirebase(img: Bitmap) {
+    private fun uploadImage(img: Bitmap) {
         val storage = FirebaseStorage.getInstance()
         val storgaRef = storage.getReferenceFromUrl("gs://foodloop-313715.appspot.com")
         val imagePath = "Photo" + ".jpg"
@@ -114,25 +113,6 @@ class CameraFragment : Fragment() {
         }
     }
 
-    private fun uploadImage(img: Bitmap){
-        val baos = ByteArrayOutputStream()
-        val user = "user"
-        img.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val image = baos.toByteArray()
-        val storage = FirebaseStorage.getInstance()
-//      val storgaRef = storage.getReferenceFromUrl("gs://foodloop-313715.appspot.com")
-        val storgaRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://foodloop-313715.appspot.com")
-        val imagePath = "Photo - " + pictId + ".jpg"
-        val imageRef = storgaRef.child("foodImg/$imagePath")
-
-        val uploadTask = imageRef.putBytes(image)
-        uploadTask.addOnFailureListener {
-            Toast.makeText(activity, "Fail to upload", Toast.LENGTH_LONG).show()
-        }.addOnSuccessListener {
-            Toast.makeText(activity, "SUCCESS!!!", Toast.LENGTH_LONG).show()
-            }
-        }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -141,7 +121,7 @@ class CameraFragment : Fragment() {
             cameraBinding.imgTap.setImageBitmap(imgBitmap)
 //            UploadObject.uploadObject("phot.jpg")
             gambar = imgBitmap
-            saveImageInFirebase(gambar)
+            uploadImage(gambar)
 //            Log.wtf("AAA", imgBitmap2.toString())
 //            UploadObject.uploadObject("gambarnya.jpg",)
         }
