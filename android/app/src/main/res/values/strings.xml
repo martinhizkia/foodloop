@@ -28,4 +28,10 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
+    <string name="username">Username</string>
+    <string name="email_not_valid">Invalid Email Format!</string>
+    <string name="username_not_valid">Username must be filled in!</string>
+    <string name="name_not_valid">Name must be filled in!</string>
+    <string name="password_not_valid">Password less than 6 characters!</string>
+    <string name="password_not_same">Passwords are not the same!</string>
 </resources>

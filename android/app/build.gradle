@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -14,6 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        buildConfigField("String", "BASE_URL", BaseUrl)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -69,6 +72,16 @@ dependencies {
     implementation platform('com.google.cloud:libraries-bom:20.5.0')
     implementation 'com.google.cloud:google-cloud-storage'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
+
+    // rx java
+    implementation "io.reactivex.rxjava2:rxjava:$rxVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion"
+
     //testing
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

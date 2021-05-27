@@ -9,6 +9,7 @@ import com.foodloop.foodloopapps.databinding.FragmentProfilBinding
 import com.foodloop.foodloopapps.ui.changepassword.ChangePasswordActivity
 import com.foodloop.foodloopapps.ui.editprofil.EditProfilActivity
 import com.foodloop.foodloopapps.ui.login.LoginActivity
+import com.foodloop.foodloopapps.ui.mainactivity.MainActivity
 
 class ProfilFragment : Fragment() {
     private lateinit var profilFragment: FragmentProfilBinding
@@ -48,8 +49,10 @@ class ProfilFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
-                val mIntent = Intent(activity, LoginActivity::class.java)
-                startActivity(mIntent)
+                Intent(activity, LoginActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
