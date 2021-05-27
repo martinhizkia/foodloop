@@ -14,7 +14,7 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var splashScreenBinding: ActivitySplashScreenBinding
 
     companion object{
-        const val SPLASH_TIME: Long = 8000
+        const val SPLASH_TIME: Long = 4000
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

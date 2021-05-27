@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "92013518990",
+    "project_id": "foodloop-313715",
+    "storage_bucket": "foodloop-313715.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92013518990:android:f76cc93635111144d9a9df",
+        "android_client_info": {
+          "package_name": "com.foodloop.foodloopapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92013518990-msb4gc1035mhanljusun5b3ojdl1mi4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1jsx1v3EMUs81hDO_I5JqNz5p0RV83o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92013518990-msb4gc1035mhanljusun5b3ojdl1mi4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
