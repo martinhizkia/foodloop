@@ -39,7 +39,6 @@ class ProfilFragment : Fragment() {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
         activity?.menuInflater?.inflate(R.menu.menu_logout, menu)
