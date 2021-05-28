@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +18,11 @@ import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-
 class CameraFragment : Fragment() {
     private lateinit var cameraBinding: FragmentCameraBinding
     private lateinit var popupBinding: PopupThanksBinding
     private lateinit var gambar: Bitmap
+    private lateinit var DOWNLOAD_URL: String
 
     companion object {
         private const val FILE_NAME = "photo.jpg"
@@ -39,9 +40,7 @@ class CameraFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-
         cameraBinding.imgTap.setOnClickListener {
             intentCamera()
 //            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -65,6 +64,7 @@ class CameraFragment : Fragment() {
 
 
         cameraBinding.btnShare.setOnClickListener {
+            uploadImage(gambar, "gambar2")
 //            saveImageInFirebase(gambar)
 //            val pathToFile: Path = Paths.get(filename)
 //            Toast.makeText(activity, "Gambar berhasil diupload!", Toast.LENGTH_SHORT).show();
@@ -97,10 +97,10 @@ class CameraFragment : Fragment() {
         val storageDirectory = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
-    private fun uploadImage(img: Bitmap) {
+    private fun uploadImage(img: Bitmap, pictName: String) {
         val storage = FirebaseStorage.getInstance()
         val storgaRef = storage.getReferenceFromUrl("gs://foodloop-313715.appspot.com")
-        val imagePath = "Photo" + ".jpg"
+        val imagePath = "$pictName.jpg"
         val imageRef = storgaRef.child("img/$imagePath")
         val baos = ByteArrayOutputStream()
         img.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -109,7 +109,8 @@ class CameraFragment : Fragment() {
         uploadTask.addOnFailureListener {
             Toast.makeText(activity, "fail to upload", Toast.LENGTH_LONG).show()
         }.addOnSuccessListener {
-            Toast.makeText(activity, "success", Toast.LENGTH_LONG).show()
+            DOWNLOAD_URL = "https://storage.googleapis.com/foodloop-313715.appspot.com/img/${imagePath}"
+            Toast.makeText(activity, DOWNLOAD_URL, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -119,27 +120,9 @@ class CameraFragment : Fragment() {
             val imgBitmap = data?.extras?.get("data") as Bitmap
             val imgURI = imgBitmap
             cameraBinding.imgTap.setImageBitmap(imgBitmap)
-//            UploadObject.uploadObject("phot.jpg")
             gambar = imgBitmap
-            uploadImage(gambar)
-//            Log.wtf("AAA", imgBitmap2.toString())
-//            UploadObject.uploadObject("gambarnya.jpg",)
         }
     }
 
-
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//            if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-//                val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-//                val imgBitmap = data?.extras?.get("data") as Bitmap
-//                cameraBinding.imgTap.setImageBitmap(takenImage)
-//                uploadImage(imgBitmap)
-//            } else {
-//                super.onActivityResult(requestCode, resultCode, data)
-//            }
-//
-//    }
 
 }
