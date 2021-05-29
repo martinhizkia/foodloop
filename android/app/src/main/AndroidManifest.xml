@@ -13,12 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodLoopApps"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.test.TestActivity2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.changepassword.ChangePasswordActivity"
             android:parentActivityName=".ui.changepassword.ChangePasswordActivity">
@@ -63,7 +57,10 @@
         <activity
             android:name=".ui.splashscreen.SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.mainactivity.MainActivity" />
     </application>
