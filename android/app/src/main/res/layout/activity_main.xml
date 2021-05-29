@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container_main"
     tools:context=".ui.mainactivity.MainActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

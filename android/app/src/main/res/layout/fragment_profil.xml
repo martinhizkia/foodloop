@@ -25,146 +25,194 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_person"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_profil_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/roboto"
+            android:text="@string/username"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_email"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_profil_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/roboto"
+            android:text="@string/email_address"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="2dp"
         android:layout_margin="20dp"
         android:background="@color/black"
         android:padding="20dp"
         android:visibility="visible" />
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp">
+    <!--    <TableLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginLeft="16dp"-->
+    <!--        android:layout_marginRight="16dp"-->
+    <!--        android:layout_marginBottom="16dp">-->
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+    <!--        <TableRow-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginBottom="8dp">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_person"/>
+    <!--            <ImageView-->
+    <!--                android:layout_width="30dp"-->
+    <!--                android:layout_height="30dp"-->
+    <!--                android:src="@drawable/ic_person"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/first_name"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="10dp"-->
+    <!--                android:text="@string/first_name"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
 
-            <TextView
-                android:id="@+id/tv_profil_firstname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="@string/first_name"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_profil_firstname"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="30dp"-->
+    <!--                android:text="@string/first_name"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
+    <!--        </TableRow>-->
+    <!--        <TableRow-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginBottom="8dp">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_person"/>
+    <!--            <ImageView-->
+    <!--                android:layout_width="30dp"-->
+    <!--                android:layout_height="30dp"-->
+    <!--                android:src="@drawable/ic_person"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/last_name"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="10dp"-->
+    <!--                android:text="@string/last_name"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
 
-            <TextView
-                android:id="@+id/tv_profil_lastname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="@string/last_name"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_profil_lastname"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="30dp"-->
+    <!--                android:text="@string/last_name"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
+    <!--        </TableRow>-->
+    <!--        <TableRow-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginBottom="8dp">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_email"/>
+    <!--            <ImageView-->
+    <!--                android:layout_width="30dp"-->
+    <!--                android:layout_height="30dp"-->
+    <!--                android:src="@drawable/ic_email"/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/email_address"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="10dp"-->
+    <!--                android:text="@string/email_address"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
 
-            <TextView
-                android:id="@+id/tv_profil_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="@string/email_address"
-                android:fontFamily="@font/roboto"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
-        </TableRow>
-    </TableLayout>
+    <!--            <TextView-->
+    <!--                android:id="@+id/tv_profil_email"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="30dp"-->
+    <!--                android:text="@string/email_address"-->
+    <!--                android:fontFamily="@font/roboto"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:layout_gravity="center_vertical"/>-->
+    <!--        </TableRow>-->
+    <!--    </TableLayout>-->
 
     <Button
         android:id="@+id/btn_edit_profil"
         android:layout_width="150dp"
         android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_signup"
-        android:text="Edit Profil"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/roboto"
-        android:textStyle="bold"
         android:drawableLeft="@drawable/ic_edit"
+        android:fontFamily="@font/roboto"
         android:paddingStart="20dp"
         android:paddingEnd="15dp"
-        android:layout_gravity="center_horizontal"
-        android:textAllCaps="false"/>
+        android:text="Edit Profil"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/btn_change_password"
         android:layout_width="200dp"
         android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_signup"
-        android:text="Change Password"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:fontFamily="@font/roboto"
-        android:textStyle="bold"
         android:drawableLeft="@drawable/ic_lock"
+        android:fontFamily="@font/roboto"
         android:paddingStart="20dp"
         android:paddingEnd="15dp"
-        android:layout_gravity="center_horizontal"
-        android:textAllCaps="false"/>
+        android:text="Change Password"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 </LinearLayout>
