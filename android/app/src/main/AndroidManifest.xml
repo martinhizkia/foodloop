@@ -3,7 +3,10 @@
     package="com.foodloop.foodloopapps">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodLoopApps"
         android:usesCleartextTraffic="true">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.foodloop.foodloopapps.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
         <activity
             android:name=".ui.changepassword.ChangePasswordActivity"
             android:parentActivityName=".ui.changepassword.ChangePasswordActivity">
@@ -34,16 +46,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.detailactivity.DetailBreadActivity" />
         </activity>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.foodloop.foodloopapps.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileprovider" />
-        </provider>
 
         <activity
             android:name=".ui.registration.RegistrationActivity"
