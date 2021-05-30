@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
@@ -29,14 +33,20 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class CameraFragment : Fragment() {
     private lateinit var cameraBinding: FragmentCameraBinding
     private lateinit var gambar: Bitmap
     private lateinit var DOWNLOAD_URL: String
     lateinit var preferences: SharedPreferences
+    private var photoFile: File? = null
+    lateinit var currentPhotoPath: String
 
     companion object {
         private const val REQUEST_CODE = 100
@@ -54,7 +64,7 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cameraBinding.imgTap.setOnClickListener {
-            intentCamera()
+            dispatchTakePictureIntent()
         }
 
         cameraBinding.btnShare.setOnClickListener {
@@ -116,13 +126,12 @@ class CameraFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("HH-mm-ss")
         val formatted = current.format(formatter)
         val nameImg = "$username$formatted.jpg"
-        val uploadImg = "https://storage.googleapis.com/foodloop-313715.appspot.com/img/${nameImg}"
-
-        uploadImage(gambar, "${uploadImg}")
-        Log.d("CEK ISI", uploadImg)
+        val imgurl = "https://storage.googleapis.com/foodloop-313715.appspot.com/img/${nameImg}"
+        uploadImage(gambar, "${nameImg}")
+//        Log.d("CEK ISI", uploadImg)
 
         val user = ApiConfig.getApiService(BuildConfig.INFO_URL).create(ApiService::class.java)
-        user.postInfo(username, nameBread, address, description, price, contact, category, uploadImg)
+        user.postInfo(username, nameBread, address, description, price, contact, category, imgurl)
             .enqueue(object : Callback<UserRespons> {
                 override fun onFailure(call: Call<UserRespons>, t: Throwable) {
                     Log.e("POST INFO", "Failed: ${t.message.toString()}")
@@ -151,15 +160,6 @@ class CameraFragment : Fragment() {
             })
     }
 
-    private fun intentCamera() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
-            activity?.packageManager?.let { packageManager ->
-                intent.resolveActivity(packageManager).also {
-                    startActivityForResult(intent, REQUEST_CODE)
-                }
-            }
-        }
-    }
 
     private fun uploadImage(img: Bitmap, pictName: String) {
         val storage = FirebaseStorage.getInstance()
@@ -182,9 +182,48 @@ class CameraFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imgBitmap = data?.extras?.get("data") as Bitmap
-            cameraBinding.imgTap.setImageBitmap(imgBitmap)
-            gambar = imgBitmap
+            val imageBitmap = BitmapFactory.decodeFile(photoFile?.absolutePath)
+            cameraBinding.imgTap.setImageBitmap(imageBitmap)
+            gambar = imageBitmap
+        }
+
+    }
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            context?.packageManager?.let {
+                takePictureIntent.resolveActivity(it)?.also {
+                    photoFile = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        null
+                    }
+                    photoFile?.also {
+                        context?.let { context ->
+                            val photoURI: Uri = FileProvider.getUriForFile(
+                                context,
+                                "com.foodloop.foodloopapps.fileprovider",
+                                it
+                            )
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                            startActivityForResult(takePictureIntent, REQUEST_CODE)
+                        }
+                    }
+                }
+            }
         }
     }
 }
