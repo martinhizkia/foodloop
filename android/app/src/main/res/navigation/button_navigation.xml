@@ -9,7 +9,11 @@
         android:id="@+id/menu_camera"
         android:name="com.foodloop.foodloopapps.ui.camera.CameraFragment"
         android:label="Camera"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_menu_camera_to_myPostFragment"
+            app:destination="@id/menu_mypost" />
+    </fragment>
     <fragment
         android:id="@+id/menu_profil"
         android:name="com.foodloop.foodloopapps.ui.profil.ProfilFragment"
@@ -18,6 +22,9 @@
         <action
             android:id="@+id/action_profilFragment_to_cameraFragment"
             app:destination="@id/menu_camera" />
+        <action
+            android:id="@+id/action_menu_profil_to_myPostFragment"
+            app:destination="@id/menu_mypost" />
     </fragment>
     <fragment
         android:id="@+id/menu_home"
@@ -30,5 +37,23 @@
         <action
             android:id="@+id/action_homeFragment_to_cameraFragment"
             app:destination="@id/menu_camera" />
+        <action
+            android:id="@+id/action_menu_home_to_myPostFragment"
+            app:destination="@id/menu_mypost" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_mypost"
+        android:name="com.foodloop.foodloopapps.ui.mypost.MyPostFragment"
+        android:label="fragment_my_post"
+        tools:layout="@layout/fragment_my_post" >
+        <action
+            android:id="@+id/action_myPostFragment_to_menu_camera"
+            app:destination="@id/menu_camera" />
+        <action
+            android:id="@+id/action_myPostFragment_to_menu_profil"
+            app:destination="@id/menu_profil" />
+        <action
+            android:id="@+id/action_myPostFragment_to_menu_home"
+            app:destination="@id/menu_home" />
     </fragment>
 </navigation>

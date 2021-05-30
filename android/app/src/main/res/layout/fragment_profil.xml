@@ -11,7 +11,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@drawable/ic_account_circle" />
 
     <TextView
         android:id="@+id/tv_profil_fullname"

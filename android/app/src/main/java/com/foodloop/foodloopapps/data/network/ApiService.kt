@@ -1,13 +1,11 @@
 package com.foodloop.foodloopapps.data.network
 
-import android.widget.ImageButton
-import com.foodloop.foodloopapps.data.respons.*
+import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
+import com.foodloop.foodloopapps.data.respons.ResultInfoRespons
+import com.foodloop.foodloopapps.data.respons.ResultRespons
+import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.Path
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.GET
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
@@ -38,6 +36,9 @@ interface ApiService {
         @Field("category") category: String,
         @Field("img") img: String,
     ): Call<UserRespons>
+
+    @GET("foodinfo")
+    fun getInfo(): Call<InfoDetailRespons>
 
     @GET("foodinfo/{username}")
     fun getUserDetail(

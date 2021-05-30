@@ -18,6 +18,7 @@ android {
         versionName "1.0"
         buildConfigField("String", "BASE_URL", BaseUrl)
         buildConfigField("String", "INFO_URL", InfoUrl)
+        buildConfigField("String", "IMAGE_URL", ImageUrl)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

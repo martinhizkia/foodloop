@@ -11,5 +11,7 @@
     <color name="blue_dark">#0053FA</color>
     <color name="orange">#FFBF00</color>
     <color name="green_light">#73D600</color>
+    <color name="red">#F10000</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="placeholder">#6FB6B6B6</color>
 </resources>

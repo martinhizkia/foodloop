@@ -62,10 +62,10 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tv_expired"
+                                android:id="@+id/tv_catagory"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Expired"
+                                android:text="Catagory"
                                 android:fontFamily="@font/roboto"
                                 android:textSize="13sp"
                                 android:ellipsize="end"

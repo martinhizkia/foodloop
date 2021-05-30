@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.databinding.FragmentProfilBinding
 import com.foodloop.foodloopapps.ui.changepassword.ChangePasswordActivity
+import com.foodloop.foodloopapps.ui.confirm.ConfirmLogoutFragment
+import com.foodloop.foodloopapps.ui.confirm.PopupconfirmFragment
 import com.foodloop.foodloopapps.ui.editprofil.EditProfilActivity
 import com.foodloop.foodloopapps.ui.login.LoginActivity
 import com.foodloop.foodloopapps.ui.mainactivity.MainActivity
@@ -61,10 +63,9 @@ class ProfilFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logout -> {
-                Intent(activity, LoginActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(it)
-                }
+                val mOptionDialogFragment = ConfirmLogoutFragment()
+                val mFragmentManager = childFragmentManager
+                mOptionDialogFragment.show(mFragmentManager, ConfirmLogoutFragment::class.java.simpleName)
             }
         }
         return super.onOptionsItemSelected(item)

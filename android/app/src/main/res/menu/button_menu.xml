@@ -11,7 +11,14 @@
         android:title="Camera"/>
 
     <item
+        android:id="@+id/menu_mypost"
+        android:icon="@drawable/custom_post"
+        android:title="My Post"/>
+
+    <item
         android:id="@+id/menu_profil"
         android:icon="@drawable/custom_profil"
         android:title="Profil"/>
+
+
 </menu>
