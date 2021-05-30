@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
             rvFood.layoutManager = LinearLayoutManager(activity)
             rvFood.setHasFixedSize(true)
             rvFood.adapter = userAdapter
-
             vieModel.setFoodDetail()
         }
 

@@ -12,6 +12,7 @@ import com.foodloop.foodloopapps.data.respons.ResultInfoRespons
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.foodloop.foodloopapps.ui.home.HomeAdapter
 
 
 class ViewModelHome : ViewModel() {
@@ -26,19 +27,18 @@ class ViewModelHome : ViewModel() {
                 response: Response<ResultInfoRespons>
             ) {
                 if (response.isSuccessful) {
-                    food.postValue(response.body()?.results)
+                    food.value = response.body()?.result
+                    println(food)
                 }
             }
-
             override fun onFailure(call: Call<ResultInfoRespons>, t: Throwable) {
                 Log.e("LIST FOOD", "Failed: ${t.message.toString()}")
             }
-
         })
     }
-
     fun getFoodDetail(): LiveData<ArrayList<InfoDetailRespons>> {
         return food
     }
+
 }
 

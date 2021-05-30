@@ -25,17 +25,15 @@ class ViewModelMypost: ViewModel() {
                 response: Response<ResultInfoRespons>
             ) {
                 if (response.isSuccessful) {
-                    listFood.postValue(response.body()?.results)
+                    listFood.postValue(response.body()?.result)
                 }
             }
-
             override fun onFailure(call: Call<ResultInfoRespons>, t: Throwable) {
                 Log.e("LIST MYPOST", "Failed: ${t.message.toString()}")
             }
 
         })
     }
-
     fun getMypostFoodDetail(): LiveData<ArrayList<InfoDetailRespons>> {
         return listFood
     }

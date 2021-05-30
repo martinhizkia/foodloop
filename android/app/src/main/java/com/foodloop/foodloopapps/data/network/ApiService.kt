@@ -1,8 +1,6 @@
 package com.foodloop.foodloopapps.data.network
 
-import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.data.respons.ResultInfoRespons
-import com.foodloop.foodloopapps.data.respons.ResultRespons
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
 import retrofit2.http.*
@@ -38,11 +36,11 @@ interface ApiService {
     ): Call<UserRespons>
 
     @GET("foodinfo")
-    fun getInfo(): Call<InfoDetailRespons>
+    fun getInfo(): Call<ResultInfoRespons>
 
     @GET("foodinfo/{username}")
     fun getUserDetail(
         @Path("username") username: String
-    ): Call<ResultRespons>
+    ): Call<ResultInfoRespons>
 
 }
