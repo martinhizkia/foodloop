@@ -15,11 +15,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.entity.BreadEntity
+import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.databinding.ActivityDetailBreadBinding
 import com.foodloop.foodloopapps.databinding.ListItemBinding
 import com.foodloop.foodloopapps.ui.home.ViewModelHome
 
-class DetailBreadActivity : AppCompatActivity() {
+class DetailFoodActivity : AppCompatActivity() {
 
     companion object{
         const val BREAD_ID = "bread_id"
@@ -33,63 +34,59 @@ class DetailBreadActivity : AppCompatActivity() {
         setContentView(detailBreadBinding.root)
 
         supportActionBar?.title = getString(R.string.detail_produk)
+        detailBreadBinding.detail.visibility = View.GONE
 
-        val idFood = intent.getStringExtra(BREAD_ID)
+        val idFood = intent.getIntExtra(BREAD_ID,0)
 
         val bundle = Bundle()
-        bundle.putString(BREAD_ID, idFood)
+        bundle.putString(BREAD_ID, idFood.toString())
 
         vieModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
         if (idFood != null) {
-            vieModel.setFoodDetail()
+            vieModel.setFoodDetail(idFood)
             vieModel.getFoodDetail().observe(this, {
                 if (it != null) {
-                    detailBreadBinding.apply {
-                        tvDetailTitle.text = "${it.foodname}"
-                        tvDetailDes.text = "${it.description}"
-                        tvDetailLocation.text = "${it.address}"
-                        val image = StringBuilder("${BuildConfig.IMAGE_URL}${it.img}").toString()
-                        Glide.with(this@DetailBreadActivity)
-                            .load(image)
-                            .apply(
-                                RequestOptions.circleCropTransform()
-                                    .placeholder(R.drawable.ic_account_circle)
-                            )
-                            .into(img)
-                    }
+                    detailBreadBinding.progressBar.visibility = View.GONE
+                    populateFood(it)
+                    detailBreadBinding.detail.visibility = View.VISIBLE
                 }
             })
 
         }
     }
-    private fun dialcontact(bread: BreadEntity) {
+    private fun dialcontact(bread: InfoDetailRespons) {
         bread.apply {
             var uri: Uri = Uri.parse("tel:$contact")
             startActivity(Intent(Intent.ACTION_DIAL, uri))
         }
     }
 
-    private fun populateMovies(bread: BreadEntity) {
-        detailBreadBinding.tvDetailTitle.text = bread.breadName
-        detailBreadBinding.tvDetailDes.text = bread.description
-        detailBreadBinding.tvDetailLocation.text = bread.address
-        detailBreadBinding.tvDetailExpired.text = bread.expired
-        detailBreadBinding.tvDetailPrice.text = bread.price
-        detailBreadBinding.tvDetailContact.text = bread.contact
+    private fun populateFood(food: InfoDetailRespons) {
+        detailBreadBinding.tvDetailTitle.text = food.foodname
+        detailBreadBinding.tvDetailDes.text = food.description
+        detailBreadBinding.tvDetailLocation.text = food.address
+        detailBreadBinding.tvDetailExpired.text = food.category
+        if (food.price == 0){
+            detailBreadBinding.tvDetailPrice.text == "Gratis"
+        }else{
+            detailBreadBinding.tvDetailPrice.text = "Rp.${food.price}"
+        }
+        detailBreadBinding.tvDetailContact.text = food.contact
+        val image = StringBuilder("${BuildConfig.IMAGE_URL}${food.img}").toString()
         Glide.with(this)
-            .load(bread.imagePosterMovies)
+            .load(image)
             .transform(RoundedCorners(20))
             .into(detailBreadBinding.img)
         Glide.with(this)
-            .load(bread.imagePosterMovies)
+            .load(image)
             .centerCrop()
             .into(detailBreadBinding.imgBg)
 
         detailBreadBinding.btnContact.setOnClickListener {
-            dialcontact(bread)
+            dialcontact(food)
         }
     }
 }

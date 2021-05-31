@@ -44,8 +44,8 @@
     <fragment
         android:id="@+id/menu_mypost"
         android:name="com.foodloop.foodloopapps.ui.mypost.MyPostFragment"
-        android:label="fragment_my_post"
-        tools:layout="@layout/fragment_my_post" >
+        android:label="My Post"
+        tools:layout="@layout/fragment_my_post">
         <action
             android:id="@+id/action_myPostFragment_to_menu_camera"
             app:destination="@id/menu_camera" />

@@ -1,5 +1,6 @@
 package com.foodloop.foodloopapps.data.network
 
+import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.data.respons.ResultInfoRespons
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
@@ -35,8 +36,25 @@ interface ApiService {
         @Field("img") img: String,
     ): Call<UserRespons>
 
+    @FormUrlEncoded
+    @DELETE("foodinfo")
+    fun deletePost(
+        @Field("id") id: Int,
+        @Field("username") username: String
+    ): Call<UserRespons>
+
     @GET("foodinfo")
     fun getInfo(): Call<ResultInfoRespons>
+
+    @GET("foodinfobyid/{id}")
+    fun getDetailFood(
+        @Path("id") id: Int?
+    ): Call<InfoDetailRespons>
+
+    @GET("foodinfo/{username}")
+    fun getMyPost(
+        @Path("username") username: String?
+    ): Call<ResultInfoRespons>
 
     @GET("foodinfo/{username}")
     fun getUserDetail(

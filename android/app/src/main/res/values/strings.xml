@@ -13,7 +13,7 @@
     <string name="already_have_an_account">Already have an account?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name_bread">Name Bread</string>
+    <string name="name_bread">Food Name</string>
     <string name="address">Address</string>
     <string name="description">Description</string>
     <string name="add_information">ADD INFORMATION</string>
