@@ -1,4 +1,4 @@
-package com.foodloop.foodloopapps.ui.home
+package com.foodloop.foodloopapps.ui.mypost
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,18 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.foodloop.foodloopapps.BuildConfig.IMAGE_URL
+import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
-import com.foodloop.foodloopapps.databinding.ListItemBinding
+import com.foodloop.foodloopapps.databinding.ListMyfoodBinding
 import com.foodloop.foodloopapps.ui.detailactivity.DetailFoodActivity
-import java.util.ArrayList
+import com.foodloop.foodloopapps.ui.mypost.detailmypost.DetailMyPostActivity
+import java.util.*
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.BreadViewHolder>() {
+class MyPostAdapter : RecyclerView.Adapter<MyPostAdapter.BreadViewHolder>() {
     private var listFood = ArrayList<InfoDetailRespons>()
     private var onItemClickCallBack: OnItemClickCallBack? = null
 
-    fun setOnItemClickCallBack (onItemClickCallBack: OnItemClickCallBack){
+    fun setOnItemClickCallBack(onItemClickCallBack: OnItemClickCallBack) {
         this.onItemClickCallBack = onItemClickCallBack
     }
 
@@ -29,8 +30,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.BreadViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreadViewHolder {
-        val listItemFoodBinding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BreadViewHolder(listItemFoodBinding)
+        val listItemBinding =
+            ListMyfoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return BreadViewHolder(listItemBinding)
     }
 
     override fun onBindViewHolder(holder: BreadViewHolder, position: Int) {
@@ -40,35 +42,38 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.BreadViewHolder>() {
 
     override fun getItemCount(): Int = listFood.size
 
-    class BreadViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(bread: InfoDetailRespons) {
+    class BreadViewHolder(private val binding: ListMyfoodBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(food: InfoDetailRespons) {
             with(binding) {
-                tvTitle.text = bread.foodname
-                tvAddress.text = bread.address
-                tvCatagory.text = bread.category
-                if (bread.price == 0){
+                tvTitle.text = food.foodname
+                tvAddress.text = food.address
+                tvCatagory.text = food.category
+                if (food.price == 0) {
                     tvPrice.text = "Gratis"
-                }else{
-                    tvPrice.text = "Rp.${bread.price}"
+                } else {
+                    tvPrice.text = "Rp.${food.price}"
                 }
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailFoodActivity::class.java)
-                    intent.putExtra(DetailFoodActivity.BREAD_ID, bread.id)
+                    val intent = Intent(itemView.context, DetailMyPostActivity::class.java)
+                    intent.putExtra(DetailMyPostActivity.BREAD_ID, food.id)
                     itemView.context.startActivity(intent)
                 }
 
-                val image = StringBuilder("$IMAGE_URL${bread.img}").toString()
+                val image = StringBuilder("${BuildConfig.IMAGE_URL}${food.img}").toString()
                 Glide.with(itemView.context)
                     .load(image)
                     .apply(
                         RequestOptions.circleCropTransform().placeholder(R.drawable.ic_loading)
-                        .error(R.drawable.ic_error))
+                            .error(R.drawable.ic_error)
+                    )
                     .into(imgPoster)
             }
         }
     }
 
-    interface OnItemClickCallBack{
+    interface OnItemClickCallBack {
         fun onItemClick(data: InfoDetailRespons)
     }
+
 }

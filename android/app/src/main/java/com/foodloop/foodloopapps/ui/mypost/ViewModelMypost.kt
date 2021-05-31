@@ -9,32 +9,35 @@ import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.data.respons.ResultInfoRespons
+import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ViewModelMypost: ViewModel() {
-    val listFood = MutableLiveData<ArrayList<InfoDetailRespons>>()
-    fun setMypostFoodDetail(username: String) {
-        val home = ApiConfig.getApiService(BuildConfig.INFO_URL).create(
+    val food = MutableLiveData<ArrayList<InfoDetailRespons>>()
+    fun setMypost(username: String) {
+        val detail = ApiConfig.getApiService(BuildConfig.INFO_URL).create(
             ApiService::class.java
         )
-        home.getUserDetail(username).enqueue(object : Callback<ResultInfoRespons> {
+        detail.getMyPost(username).enqueue(object : Callback<ResultInfoRespons> {
             override fun onResponse(
                 call: Call<ResultInfoRespons>,
                 response: Response<ResultInfoRespons>
             ) {
                 if (response.isSuccessful) {
-                    listFood.postValue(response.body()?.result)
+                    food.value = response.body()?.result
                 }
             }
+
             override fun onFailure(call: Call<ResultInfoRespons>, t: Throwable) {
-                Log.e("LIST MYPOST", "Failed: ${t.message.toString()}")
+                Log.d("onFailure", t.message.toString())
             }
 
         })
     }
-    fun getMypostFoodDetail(): LiveData<ArrayList<InfoDetailRespons>> {
-        return listFood
+
+    fun getMypost(): LiveData<ArrayList<InfoDetailRespons>> {
+        return food
     }
 }

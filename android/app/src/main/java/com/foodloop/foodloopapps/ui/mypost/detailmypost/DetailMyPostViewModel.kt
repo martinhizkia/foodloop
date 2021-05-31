@@ -1,4 +1,4 @@
-package com.foodloop.foodloopapps.ui.detailactivity
+package com.foodloop.foodloopapps.ui.mypost.detailmypost
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,34 +8,17 @@ import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
+import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailMyPostViewModel : ViewModel() {
     val users = MutableLiveData<InfoDetailRespons>()
-    fun setFoodDetail(id: Int) {
+    fun setMypostDetail(id: Int) {
         val detail = ApiConfig.getApiService(BuildConfig.INFO_URL).create(
             ApiService::class.java
         )
-
-//        home.getInfo().enqueue(object : Callback<ResultRespons> {
-//            override fun onResponse(
-//                call: Call<ResultRespons>,
-//                response: Response<ResultRespons>
-//            ) {
-//                if (response.isSuccessful) {
-//                    food.postValue(response.body().result)
-////                    Log.wtf("result0", response.body().toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResultRespons>, t: Throwable) {
-//                Log.e("LOGIN", "Failed: ${t.message.toString()}")
-//            }
-//
-//        })
-
         detail.getDetailFood(id).enqueue(object : Callback<InfoDetailRespons> {
             override fun onResponse(
                 call: Call<InfoDetailRespons>,
@@ -53,7 +36,28 @@ class DetailViewModel : ViewModel() {
         })
     }
 
-    fun getFoodDetail(): LiveData<InfoDetailRespons> {
+    fun getMypostDetail(): LiveData<InfoDetailRespons> {
         return users
+    }
+
+    fun deletePost(id: Int, username: String) {
+        val detail = ApiConfig.getApiService(BuildConfig.INFO_URL).create(
+            ApiService::class.java
+        )
+        detail.deletePost(id, username).enqueue(object : Callback<UserRespons> {
+            override fun onResponse(
+                call: Call<UserRespons>,
+                response: Response<UserRespons>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<UserRespons>, t: Throwable) {
+                Log.d("onFailure", t.message.toString())
+            }
+
+        })
     }
 }

@@ -3,7 +3,8 @@
     package="com.foodloop.foodloopapps">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodLoopApps"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.mypost.detailmypost.DetailMyPostActivity"></activity>
         <activity
             android:name=".ui.changepassword.ChangePasswordActivity"
             android:parentActivityName=".ui.changepassword.ChangePasswordActivity">
@@ -30,11 +32,11 @@
                 android:value=".ui.editprofil.EditProfilActivity" />
         </activity>
         <activity
-            android:name=".ui.detailactivity.DetailBreadActivity"
-            android:parentActivityName=".ui.detailactivity.DetailBreadActivity">
+            android:name=".ui.detailactivity.DetailFoodActivity"
+            android:parentActivityName=".ui.detailactivity.DetailFoodActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.detailactivity.DetailBreadActivity" />
+                android:value=".ui.detailactivity.DetailFoodActivity" />
         </activity>
 
         <provider
@@ -44,7 +46,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/> />
+                android:resource="@xml/file_paths" />
+            />
         </provider>
 
         <activity
@@ -61,6 +64,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
