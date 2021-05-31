@@ -8,6 +8,7 @@ import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
+import com.foodloop.foodloopapps.data.respons.StatusRespons
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,17 +45,17 @@ class DetailMyPostViewModel : ViewModel() {
         val detail = ApiConfig.getApiService(BuildConfig.INFO_URL).create(
             ApiService::class.java
         )
-        detail.deletePost(id, username).enqueue(object : Callback<UserRespons> {
+        detail.deletePost(username, id).enqueue(object : Callback<StatusRespons> {
             override fun onResponse(
-                call: Call<UserRespons>,
-                response: Response<UserRespons>
+                call: Call<StatusRespons>,
+                response: Response<StatusRespons>
             ) {
                 if (response.isSuccessful) {
                     response.body()
                 }
             }
 
-            override fun onFailure(call: Call<UserRespons>, t: Throwable) {
+            override fun onFailure(call: Call<StatusRespons>, t: Throwable) {
                 Log.d("onFailure", t.message.toString())
             }
 
