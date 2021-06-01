@@ -35,4 +35,6 @@
     <string name="password_not_valid">Password less than 6 characters!</string>
     <string name="password_not_same">Passwords are not the same!</string>
     <string name="category">Category</string>
+    <string name="fromgallery">From Gallery</string>
+
 </resources>

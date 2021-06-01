@@ -1,13 +1,19 @@
 package com.foodloop.foodloopapps.ui.camera
 
+import android.Manifest
+import android.R.attr
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.os.Build.*
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -18,16 +24,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.BuildConfig
-import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import com.foodloop.foodloopapps.databinding.FragmentCameraBinding
 import com.foodloop.foodloopapps.ui.confirm.PopupconfirmFragment
-import com.foodloop.foodloopapps.ui.home.HomeFragment
-import com.foodloop.foodloopapps.ui.registration.RegistrationActivity
 import com.google.firebase.storage.FirebaseStorage
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +44,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 class CameraFragment : Fragment() {
     private lateinit var cameraBinding: FragmentCameraBinding
     private lateinit var gambar: Bitmap
@@ -50,6 +55,8 @@ class CameraFragment : Fragment() {
 
     companion object {
         private const val REQUEST_CODE = 100
+        private const val GALLERY_CODE = 120
+        private const val PERMISSION_CODE = 1001;
     }
 
     override fun onCreateView(
@@ -60,12 +67,31 @@ class CameraFragment : Fragment() {
         return cameraBinding.root
     }
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cameraBinding.imgTap.setOnClickListener {
             dispatchTakePictureIntent()
         }
+        cameraBinding.imgGallery.setOnClickListener{
+            if (VERSION.SDK_INT >= VERSION_CODES.M){
+                if (context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==
+                    PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    requestPermissions(permissions, PERMISSION_CODE);
+                }
+                else{
+                    //permission already granted
+                    pickImageFromGallery();
+                }
+            }
+            else{
+                //system OS is < Marshmallow
+                pickImageFromGallery();
+            }
+        }
+
 
         cameraBinding.btnShare.setOnClickListener {
             val nameBread: String = cameraBinding.edName.text.toString().trim()
@@ -110,6 +136,7 @@ class CameraFragment : Fragment() {
         }
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun postInfo() {
         preferences =
@@ -126,7 +153,6 @@ class CameraFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("HH-mm-ss")
         val formatted = current.format(formatter)
         val nameImg = "$username$formatted.jpg"
-
         uploadImage(gambar, "$nameImg")
 
         val user = ApiConfig.getApiService(BuildConfig.INFO_URL).create(ApiService::class.java)
@@ -177,15 +203,58 @@ class CameraFragment : Fragment() {
         }
     }
 
+    @RequiresApi(VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = BitmapFactory.decodeFile(photoFile?.absolutePath)
             cameraBinding.imgTap.setImageBitmap(imageBitmap)
-            gambar = imageBitmap
+                gambar = imageBitmap
         }
-
+        if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_CODE) {
+//            val bitmap = when {
+//                Build.VERSION.SDK_INT < 28 -> MediaStore.Images.Media.getBitmap(
+//                    context?.contentResolver,
+//                    data?.data
+//                )
+//                else -> {
+//                    val source = context?.let { ImageDecoder.createSource(it.contentResolver,
+//                        data?.data!!
+//                    ) }
+//                    ImageDecoder.decodeBitmap(source!!)
+//                }
+//            }
+            val source = context?.let { ImageDecoder.createSource(it.contentResolver,
+                        data?.data!!) }
+            val bitmap = ImageDecoder.decodeBitmap(source!!)
+            cameraBinding.imgTap.setImageBitmap(bitmap)
+            gambar = bitmap
+        }
     }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size >0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                    //permission from popup granted
+                    pickImageFromGallery()
+                }
+                else{
+                    //permission from popup denied
+                    Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, GALLERY_CODE)
+    }
+
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
