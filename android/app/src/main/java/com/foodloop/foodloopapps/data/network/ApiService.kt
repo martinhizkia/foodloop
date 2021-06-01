@@ -37,13 +37,6 @@ interface ApiService {
         @Field("img") img: String,
     ): Call<UserRespons>
 
-//    @FormUrlEncoded
-//    @DELETE("foodinfo")
-//    fun deletePost(
-//        @Field("id") id: Int,
-//        @Field("username") username: String
-//    ): Call<UserRespons>
-
     @DELETE("foodinfo/{username}/{id}")
     fun deletePost(
         @Path("username") username: String,

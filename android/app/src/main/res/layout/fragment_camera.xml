@@ -31,17 +31,18 @@
             android:scaleType="fitCenter"
             android:background="#00000000"/>
 
-        <TextView
-            android:id="@+id/img_gallery"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/fromGallery"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_login_active"
             android:fontFamily="@font/roboto"
-            android:text="@string/fromgallery"
-            android:textColor="@color/purple_700"
-            android:textSize="15sp"
+            android:text="From gallery"
+            android:textColor="@color/white"
+            android:textSize="11sp"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,28 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/category"
-            android:textColor="@color/black"
-            android:fontFamily="@font/roboto"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_gravity="left"/>
-
-        <EditText
-            android:id="@+id/ed_category"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:hint="@string/category"
-            android:textColor="@color/black"
-            android:inputType="text"
-            android:textSize="14sp"
-            android:ems="10"
-            android:backgroundTint="@color/blue_dark"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/price"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto"
@@ -174,16 +153,39 @@
             android:ems="10"
             android:backgroundTint="@color/blue_dark"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/category"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/ed_category"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/category"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:ems="10"
+            android:backgroundTint="@color/blue_dark"/>
+
         <Button
             android:id="@+id/btn_share"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:text="@string/share"
             android:layout_marginTop="40dp"
             android:background="@drawable/btn_login_active"
+            android:fontFamily="@font/roboto"
+            android:text="@string/share"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:fontFamily="@font/roboto"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

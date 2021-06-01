@@ -1,7 +1,6 @@
 package com.foodloop.foodloopapps.ui.camera
 
 import android.Manifest
-import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -31,8 +30,11 @@ import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import com.foodloop.foodloopapps.databinding.FragmentCameraBinding
+import com.foodloop.foodloopapps.ml.Model
 import com.foodloop.foodloopapps.ui.confirm.PopupconfirmFragment
 import com.google.firebase.storage.FirebaseStorage
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.label.Category
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,6 +50,7 @@ import java.util.*
 class CameraFragment : Fragment() {
     private lateinit var cameraBinding: FragmentCameraBinding
     private lateinit var gambar: Bitmap
+    private lateinit var categoryFood: String
     private lateinit var DOWNLOAD_URL: String
     lateinit var preferences: SharedPreferences
     private var photoFile: File? = null
@@ -74,19 +77,22 @@ class CameraFragment : Fragment() {
         cameraBinding.imgTap.setOnClickListener {
             dispatchTakePictureIntent()
         }
-        cameraBinding.imgGallery.setOnClickListener{
-            if (VERSION.SDK_INT >= VERSION_CODES.M){
-                if (context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==
-                    PackageManager.PERMISSION_DENIED){
+        cameraBinding.fromGallery.setOnClickListener {
+            if (VERSION.SDK_INT >= VERSION_CODES.M) {
+                if (context?.let { it1 ->
+                        checkSelfPermission(
+                            it1,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        )
+                    } ==
+                    PackageManager.PERMISSION_DENIED) {
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
                     requestPermissions(permissions, PERMISSION_CODE);
-                }
-                else{
+                } else {
                     //permission already granted
                     pickImageFromGallery();
                 }
-            }
-            else{
+            } else {
                 //system OS is < Marshmallow
                 pickImageFromGallery();
             }
@@ -99,7 +105,7 @@ class CameraFragment : Fragment() {
             val address: String = cameraBinding.edAddress.text.toString().trim()
             val price: String = cameraBinding.edPrice.text.toString().trim()
             val contact: String = cameraBinding.edContact.text.toString().trim()
-            val category: String = cameraBinding.edCategory.text.toString().trim()
+//            val category: String = cameraBinding.edCategory.text.toString().trim()
 
             if (nameBread.isEmpty()) {
                 cameraBinding.edName.error = "Name Bread is required"
@@ -126,11 +132,11 @@ class CameraFragment : Fragment() {
                 cameraBinding.edContact.requestFocus()
                 return@setOnClickListener
             }
-            if (category.isEmpty()) {
-                cameraBinding.edCategory.error = "Catagory is required"
-                cameraBinding.edCategory.requestFocus()
-                return@setOnClickListener
-            }
+//            if (category.isEmpty()) {
+//                cameraBinding.edCategory.error = "Catagory is required"
+//                cameraBinding.edCategory.requestFocus()
+//                return@setOnClickListener
+//            }
             postInfo()
 
         }
@@ -148,7 +154,7 @@ class CameraFragment : Fragment() {
         val address = cameraBinding.edAddress.text.toString()
         val price = cameraBinding.edPrice.text.toString()
         val contact = cameraBinding.edContact.text.toString()
-        val category = cameraBinding.edCategory.text.toString()
+        val category = categoryFood
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("HH-mm-ss")
         val formatted = current.format(formatter)
@@ -173,7 +179,10 @@ class CameraFragment : Fragment() {
                         ).show()
                         val mOptionDialogFragment = PopupconfirmFragment()
                         val mFragmentManager = childFragmentManager
-                        mOptionDialogFragment.show(mFragmentManager, PopupconfirmFragment::class.java.simpleName)
+                        mOptionDialogFragment.show(
+                            mFragmentManager,
+                            PopupconfirmFragment::class.java.simpleName
+                        )
                     } else {
                         Toast.makeText(
                             activity,
@@ -209,45 +218,82 @@ class CameraFragment : Fragment() {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = BitmapFactory.decodeFile(photoFile?.absolutePath)
             cameraBinding.imgTap.setImageBitmap(imageBitmap)
-                gambar = imageBitmap
+            gambar = imageBitmap
+            val bitmap88 = imageBitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val prediction = predict(bitmap88)
+            val max = prediction.apply { sortByDescending { it.score }}.take(Int.MAX_VALUE)
+            val foodCategory =  when (max[0].label.toString()) {
+                "Vegetable_or_Fruit" -> "Vegetable or Fruit"
+                "Dessert" -> "Dessert"
+                "Bread" -> "Bread"
+                "Noodles_or_Pasta" -> "Noodles or Pasta"
+                "Rice" -> "Rice"
+                "Dairy_Product" -> "Dairy Product"
+                "Seafood" -> "Seafood"
+                "Egg" -> "Egg"
+                "Fried_Food" -> "Fried Food"
+                "Meat" -> "Meat"
+                "Soup" -> "Soup"
+                else -> { // Note the block
+                    "Undefined"
+                }
+            }
+            categoryFood = foodCategory
         }
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_CODE) {
-//            val bitmap = when {
-//                Build.VERSION.SDK_INT < 28 -> MediaStore.Images.Media.getBitmap(
-//                    context?.contentResolver,
-//                    data?.data
-//                )
-//                else -> {
-//                    val source = context?.let { ImageDecoder.createSource(it.contentResolver,
-//                        data?.data!!
-//                    ) }
-//                    ImageDecoder.decodeBitmap(source!!)
-//                }
-//            }
-            val source = context?.let { ImageDecoder.createSource(it.contentResolver,
-                        data?.data!!) }
+            val source = context?.let {
+                ImageDecoder.createSource(
+                    it.contentResolver,
+                    data?.data!!
+                )
+            }
             val bitmap = ImageDecoder.decodeBitmap(source!!)
             cameraBinding.imgTap.setImageBitmap(bitmap)
             gambar = bitmap
+            val bitmap88 = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val prediction = predict(bitmap88)
+            val max = prediction.apply { sortByDescending { it.score }}.take(Int.MAX_VALUE)
+            val foodCategory =  when (max[0].label.toString()) {
+                "Vegetable_or_Fruit" -> "Vegetable or Fruit"
+                "Dessert" -> "Dessert"
+                "Bread" -> "Bread"
+                "Noodles_or_Pasta" -> "Noodles or Pasta"
+                "Rice" -> "Rice"
+                "Dairy_Product" -> "Dairy Product"
+                "Seafood" -> "Seafood"
+                "Egg" -> "Egg"
+                "Fried_Food" -> "Fried Food"
+                "Meat" -> "Meat"
+                "Soup" -> "Soup"
+                else -> { // Note the block
+                    "Undefined"
+                }
+            }
+        categoryFood = foodCategory
         }
+        cameraBinding.edCategory.text = categoryFood
     }
 
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size >0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
                     //permission from popup granted
                     pickImageFromGallery()
-                }
-                else{
+                } else {
                     //permission from popup denied
                     Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
     private fun pickImageFromGallery() {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
@@ -293,4 +339,14 @@ class CameraFragment : Fragment() {
             }
         }
     }
+
+    private fun predict(img: Bitmap): MutableList<Category>{
+        val model = Model.newInstance(requireActivity())
+        val image = TensorImage.fromBitmap(img)
+        val outputs = model.process(image)
+        val probability = outputs.probabilityAsCategoryList
+        model.close()
+        return probability
+    }
 }
+
