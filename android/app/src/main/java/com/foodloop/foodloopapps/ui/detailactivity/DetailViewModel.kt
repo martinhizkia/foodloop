@@ -19,23 +19,6 @@ class DetailViewModel : ViewModel() {
             ApiService::class.java
         )
 
-//        home.getInfo().enqueue(object : Callback<ResultRespons> {
-//            override fun onResponse(
-//                call: Call<ResultRespons>,
-//                response: Response<ResultRespons>
-//            ) {
-//                if (response.isSuccessful) {
-//                    food.postValue(response.body().result)
-////                    Log.wtf("result0", response.body().toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResultRespons>, t: Throwable) {
-//                Log.e("LOGIN", "Failed: ${t.message.toString()}")
-//            }
-//
-//        })
-
         detail.getDetailFood(id).enqueue(object : Callback<InfoDetailRespons> {
             override fun onResponse(
                 call: Call<InfoDetailRespons>,

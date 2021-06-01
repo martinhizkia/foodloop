@@ -1,6 +1,7 @@
 package com.foodloop.foodloopapps.ui.mypost.detailmypost
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.databinding.ActivityDetailMyPostBinding
+import com.foodloop.foodloopapps.ui.mainactivity.MainActivity
 
 class DetailMyPostActivity : AppCompatActivity() {
     companion object {
@@ -62,6 +64,9 @@ class DetailMyPostActivity : AppCompatActivity() {
         val username = preferences.getString("USERNAME", "")
         if (username != null) {
             vieModel.deletePost(idFood, username)
+            Intent(this, MainActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 

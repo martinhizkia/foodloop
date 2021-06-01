@@ -17,7 +17,6 @@ import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.entity.BreadEntity
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.databinding.ActivityDetailBreadBinding
-import com.foodloop.foodloopapps.databinding.ListItemBinding
 import com.foodloop.foodloopapps.ui.home.ViewModelHome
 
 class DetailFoodActivity : AppCompatActivity() {

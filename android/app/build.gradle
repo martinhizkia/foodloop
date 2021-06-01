@@ -38,6 +38,7 @@ android {
 
     buildFeatures{
         viewBinding true
+        mlModelBinding true
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -82,6 +83,16 @@ dependencies {
     // rx java
     implementation "io.reactivex.rxjava2:rxjava:$rxVersion"
     implementation "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion"
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-text:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:0.0.0-nightly'
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
+    implementation 'org.tensorflow:tensorflow-lite:2.4.0'
 
     //testing
     testImplementation 'junit:junit:4.+'

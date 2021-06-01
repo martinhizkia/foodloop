@@ -10,10 +10,8 @@ import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.databinding.FragmentProfilBinding
 import com.foodloop.foodloopapps.ui.changepassword.ChangePasswordActivity
 import com.foodloop.foodloopapps.ui.confirm.ConfirmLogoutFragment
-import com.foodloop.foodloopapps.ui.confirm.PopupconfirmFragment
 import com.foodloop.foodloopapps.ui.editprofil.EditProfilActivity
-import com.foodloop.foodloopapps.ui.login.LoginActivity
-import com.foodloop.foodloopapps.ui.mainactivity.MainActivity
+import com.foodloop.foodloopapps.ui.settings.SettingsActivity
 
 class ProfilFragment : Fragment() {
     private lateinit var profilFragment: FragmentProfilBinding
@@ -56,7 +54,7 @@ class ProfilFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
-        activity?.menuInflater?.inflate(R.menu.menu_logout, menu)
+        activity?.menuInflater?.inflate(R.menu.top_menu, menu)
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -66,6 +64,10 @@ class ProfilFragment : Fragment() {
                 val mOptionDialogFragment = ConfirmLogoutFragment()
                 val mFragmentManager = childFragmentManager
                 mOptionDialogFragment.show(mFragmentManager, ConfirmLogoutFragment::class.java.simpleName)
+            }
+            R.id.menu_settings -> {
+                val mIntent = Intent(context, SettingsActivity::class.java)
+                startActivity(mIntent)
             }
         }
         return super.onOptionsItemSelected(item)

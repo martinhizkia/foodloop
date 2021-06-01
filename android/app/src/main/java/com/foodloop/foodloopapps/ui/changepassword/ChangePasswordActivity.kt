@@ -14,7 +14,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         changePasswordActivity = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(changePasswordActivity.root)
-        supportActionBar?.title="Change Password"
+        supportActionBar?.title=getString(R.string.change_password)
         changePasswordActivity.btnSave.setOnClickListener {
             val mIntent = Intent(this, ProfilFragment::class.java)
             startActivity(mIntent)

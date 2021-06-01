@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.BuildConfig.BASE_URL
+import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
@@ -35,12 +36,12 @@ class LoginActivity : AppCompatActivity() {
             val password : String = binding.edPassword.text.toString().trim()
 
             if (username.isEmpty()){
-                binding.edUsername.error = "Username is required"
+                binding.edUsername.error = getString(R.string.user_required)
                 binding.edUsername.requestFocus()
                 return@setOnClickListener
             }
             if (password.isEmpty()){
-                binding.edPassword.error = "Password is required"
+                binding.edPassword.error = getString(R.string.password_required)
                 binding.edPassword.requestFocus()
                 return@setOnClickListener
             }
@@ -67,29 +68,35 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<UserRespons>, response: Response<UserRespons>) {
                     val user = response.body()
                     user?.status?.let { Log.d("LOGIN", it) }
-                    if (user?.status == "Login Success") {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            user?.status,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val login: SharedPreferences.Editor = sharedPreferences.edit()
-                        login.putString("USERNAME", username)
-                        login.putString("NAME", user.fullname)
-                        login.putString("EMAIL", user.email)
-                        login.apply()
-                        Intent(this@LoginActivity, MainActivity::class.java).also {
-                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(it)
+                        if (user?.status == "Wrong Username"){
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.user_wrong),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }else if (user?.status == "Wrong Password"){
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.wrong_pass),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }else{
+                            Toast.makeText(
+                                this@LoginActivity,
+                                getString(R.string.login_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val login: SharedPreferences.Editor = sharedPreferences.edit()
+                            login.putString("USERNAME", username)
+                            login.putString("NAME", user?.fullname)
+                            login.putString("EMAIL", user?.email)
+                            login.apply()
+                            Intent(this@LoginActivity, MainActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(it)
+                            }
+                            finish()
                         }
-                        finish()
-                    } else {
-                        Toast.makeText(
-                            this@LoginActivity,
-                            user?.status,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
                 }
             })
     }

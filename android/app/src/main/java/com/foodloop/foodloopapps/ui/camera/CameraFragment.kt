@@ -1,7 +1,6 @@
 package com.foodloop.foodloopapps.ui.camera
 
 import android.Manifest
-import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -27,12 +26,17 @@ import androidx.core.content.FileProvider
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.BuildConfig
+import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
 import com.foodloop.foodloopapps.databinding.FragmentCameraBinding
+import com.foodloop.foodloopapps.ml.ConvertedModel
 import com.foodloop.foodloopapps.ui.confirm.PopupconfirmFragment
 import com.google.firebase.storage.FirebaseStorage
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,19 +78,22 @@ class CameraFragment : Fragment() {
         cameraBinding.imgTap.setOnClickListener {
             dispatchTakePictureIntent()
         }
-        cameraBinding.imgGallery.setOnClickListener{
-            if (VERSION.SDK_INT >= VERSION_CODES.M){
-                if (context?.let { it1 -> checkSelfPermission(it1, Manifest.permission.READ_EXTERNAL_STORAGE) } ==
-                    PackageManager.PERMISSION_DENIED){
+        cameraBinding.imgGallery.setOnClickListener {
+            if (VERSION.SDK_INT >= VERSION_CODES.M) {
+                if (context?.let { it1 ->
+                        checkSelfPermission(
+                            it1,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        )
+                    } ==
+                    PackageManager.PERMISSION_DENIED) {
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
                     requestPermissions(permissions, PERMISSION_CODE);
-                }
-                else{
+                } else {
                     //permission already granted
                     pickImageFromGallery();
                 }
-            }
-            else{
+            } else {
                 //system OS is < Marshmallow
                 pickImageFromGallery();
             }
@@ -102,27 +109,27 @@ class CameraFragment : Fragment() {
             val category: String = cameraBinding.edCategory.text.toString().trim()
 
             if (nameBread.isEmpty()) {
-                cameraBinding.edName.error = "Name Bread is required"
+                cameraBinding.edName.error = getString(R.string.name_food_required)
                 cameraBinding.edName.requestFocus()
                 return@setOnClickListener
             }
             if (description.isEmpty()) {
-                cameraBinding.edDescription.error = "Description is required"
+                cameraBinding.edDescription.error = getString(R.string.description_required)
                 cameraBinding.edDescription.requestFocus()
                 return@setOnClickListener
             }
             if (address.isEmpty()) {
-                cameraBinding.edAddress.error = "Address is required"
+                cameraBinding.edAddress.error = getString(R.string.address_required)
                 cameraBinding.edAddress.requestFocus()
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
-                cameraBinding.edPrice.error = "Price is required"
+                cameraBinding.edPrice.error = getString(R.string.price_required)
                 cameraBinding.edPrice.requestFocus()
                 return@setOnClickListener
             }
             if (contact.isEmpty()) {
-                cameraBinding.edContact.error = "Contact is required"
+                cameraBinding.edContact.error = getString(R.string.contact_required)
                 cameraBinding.edContact.requestFocus()
                 return@setOnClickListener
             }
@@ -132,7 +139,34 @@ class CameraFragment : Fragment() {
                 return@setOnClickListener
             }
             postInfo()
+        }
 
+        cameraBinding.btnPrediction.setOnClickListener {
+            var resized = Bitmap.createScaledBitmap(gambar, 224, 224, true)
+            val model = context?.let { ConvertedModel.newInstance(it) }
+
+            var tbuffer = TensorImage.fromBitmap(resized)
+            var byteBuffer = tbuffer.buffer
+
+// Creates inputs for reference.
+            val inputFeature0 =
+                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(byteBuffer)
+
+// Runs model inference and gets result.
+            val outputs = model?.process(inputFeature0)
+            val outputFeature0 = outputs?.outputFeature0AsTensorBuffer
+
+            var max = outputFeature0?.floatArray?.let { getMax(it) }
+
+            val labels =
+                context?.assets?.open("labels.txt")?.bufferedReader().use { it?.readText() }
+                    ?.split("\n")
+
+            cameraBinding.edCategory.text = max?.let { labels?.get(it) }
+
+// Releases model resources if no longer used.
+            model?.close()
         }
     }
 
@@ -173,7 +207,10 @@ class CameraFragment : Fragment() {
                         ).show()
                         val mOptionDialogFragment = PopupconfirmFragment()
                         val mFragmentManager = childFragmentManager
-                        mOptionDialogFragment.show(mFragmentManager, PopupconfirmFragment::class.java.simpleName)
+                        mOptionDialogFragment.show(
+                            mFragmentManager,
+                            PopupconfirmFragment::class.java.simpleName
+                        )
                     } else {
                         Toast.makeText(
                             activity,
@@ -209,7 +246,7 @@ class CameraFragment : Fragment() {
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = BitmapFactory.decodeFile(photoFile?.absolutePath)
             cameraBinding.imgTap.setImageBitmap(imageBitmap)
-                gambar = imageBitmap
+            gambar = imageBitmap
         }
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_CODE) {
 //            val bitmap = when {
@@ -224,30 +261,51 @@ class CameraFragment : Fragment() {
 //                    ImageDecoder.decodeBitmap(source!!)
 //                }
 //            }
-            val source = context?.let { ImageDecoder.createSource(it.contentResolver,
-                        data?.data!!) }
+            val source = context?.let {
+                ImageDecoder.createSource(
+                    it.contentResolver,
+                    data?.data!!
+                )
+            }
             val bitmap = ImageDecoder.decodeBitmap(source!!)
             cameraBinding.imgTap.setImageBitmap(bitmap)
             gambar = bitmap
         }
     }
 
+    fun getMax(arr: FloatArray): Int {
+        var ind = 0;
+        var min = 0.0f;
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
+        for (i in 0..1000) {
+            if (arr[i] > min) {
+                min = arr[i]
+                ind = i;
+            }
+        }
+        return ind
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size >0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
                     //permission from popup granted
                     pickImageFromGallery()
-                }
-                else{
+                } else {
                     //permission from popup denied
                     Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
     private fun pickImageFromGallery() {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
