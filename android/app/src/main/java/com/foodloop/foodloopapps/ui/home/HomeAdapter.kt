@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.foodloop.foodloopapps.BuildConfig.IMAGE_URL
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
-import com.foodloop.foodloopapps.databinding.ListItemBinding
+import com.foodloop.foodloopapps.databinding.ListMyfoodBinding
 import com.foodloop.foodloopapps.ui.detailactivity.DetailFoodActivity
 import java.util.ArrayList
 
@@ -29,7 +29,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.BreadViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreadViewHolder {
-        val listItemFoodBinding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val listItemFoodBinding = ListMyfoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BreadViewHolder(listItemFoodBinding)
     }
 
@@ -40,7 +40,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.BreadViewHolder>() {
 
     override fun getItemCount(): Int = listFood.size
 
-    class BreadViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class BreadViewHolder(private val binding: ListMyfoodBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(bread: InfoDetailRespons) {
             with(binding) {
                 tvTitle.text = bread.foodname

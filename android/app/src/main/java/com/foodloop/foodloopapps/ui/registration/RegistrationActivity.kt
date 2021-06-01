@@ -153,7 +153,7 @@ class RegistrationActivity : AppCompatActivity() {
                     if (user?.status == "Signup Success") {
                         Toast.makeText(
                             this@RegistrationActivity,
-                            user?.status,
+                            getString(R.string.signup_success),
                             Toast.LENGTH_SHORT
                         ).show()
                         val intent = Intent(this@RegistrationActivity, LoginActivity::class.java)
@@ -161,7 +161,7 @@ class RegistrationActivity : AppCompatActivity() {
                     }else{
                         Toast.makeText(
                             this@RegistrationActivity,
-                            user?.status,
+                            getString(R.string.user_already),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

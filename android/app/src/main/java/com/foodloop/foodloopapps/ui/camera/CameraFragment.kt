@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.BuildConfig
+import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
@@ -108,27 +109,27 @@ class CameraFragment : Fragment() {
 //            val category: String = cameraBinding.edCategory.text.toString().trim()
 
             if (nameBread.isEmpty()) {
-                cameraBinding.edName.error = "Name Bread is required"
+                cameraBinding.edName.error = getString(R.string.name_food_required)
                 cameraBinding.edName.requestFocus()
                 return@setOnClickListener
             }
             if (description.isEmpty()) {
-                cameraBinding.edDescription.error = "Description is required"
+                cameraBinding.edDescription.error = getString(R.string.description_required)
                 cameraBinding.edDescription.requestFocus()
                 return@setOnClickListener
             }
             if (address.isEmpty()) {
-                cameraBinding.edAddress.error = "Address is required"
+                cameraBinding.edAddress.error = getString(R.string.address_required)
                 cameraBinding.edAddress.requestFocus()
                 return@setOnClickListener
             }
             if (price.isEmpty()) {
-                cameraBinding.edPrice.error = "Price is required"
+                cameraBinding.edPrice.error = getString(R.string.price_required)
                 cameraBinding.edPrice.requestFocus()
                 return@setOnClickListener
             }
             if (contact.isEmpty()) {
-                cameraBinding.edContact.error = "Contact is required"
+                cameraBinding.edContact.error = getString(R.string.contact_required)
                 cameraBinding.edContact.requestFocus()
                 return@setOnClickListener
             }
@@ -138,8 +139,8 @@ class CameraFragment : Fragment() {
 //                return@setOnClickListener
 //            }
             postInfo()
-
         }
+
     }
 
 

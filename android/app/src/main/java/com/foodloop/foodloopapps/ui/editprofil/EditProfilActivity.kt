@@ -16,7 +16,7 @@ class EditProfilActivity : AppCompatActivity() {
         editProfilBinding = ActivityEditProfilBinding.inflate(layoutInflater)
         setContentView(editProfilBinding.root)
 
-        supportActionBar?.title="Edit Profil"
+        supportActionBar?.title=getString(R.string.edit_profil)
         editProfilBinding.btnSave.setOnClickListener {
             val mIntent = Intent(this, ProfilFragment::class.java)
             startActivity(mIntent)
