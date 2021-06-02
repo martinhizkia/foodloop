@@ -27,6 +27,7 @@ import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.data.network.ApiConfig
 import com.foodloop.foodloopapps.data.network.ApiService
 import com.foodloop.foodloopapps.data.respons.UserRespons
@@ -52,8 +53,9 @@ class CameraFragment : Fragment() {
     private lateinit var cameraBinding: FragmentCameraBinding
     private lateinit var gambar: Bitmap
     private lateinit var categoryFood: String
+    private lateinit var categoryScore: String
     private lateinit var DOWNLOAD_URL: String
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreference
     private var photoFile: File? = null
     lateinit var currentPhotoPath: String
 
@@ -146,10 +148,8 @@ class CameraFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun postInfo() {
-        preferences =
-            this.activity?.getSharedPreferences("SHARE LOGIN", Context.MODE_PRIVATE) ?: preferences
-        val username = preferences.getString("USERNAME", "")
-
+        preferences = SharedPreference(requireActivity())
+        val username = preferences.getStringPreference("USERNAME")
         val nameBread = cameraBinding.edName.text.toString()
         val description = cameraBinding.edDescription.text.toString()
         val address = cameraBinding.edAddress.text.toString()
@@ -239,6 +239,9 @@ class CameraFragment : Fragment() {
                     "Undefined"
                 }
             }
+            val foodScore = max[0].score * 100
+            val number3digits:Double = String.format("%.3f", foodScore).toDouble()
+            categoryScore = number3digits.toString()
             categoryFood = foodCategory
         }
         if (resultCode == Activity.RESULT_OK && requestCode == GALLERY_CODE) {
@@ -270,9 +273,12 @@ class CameraFragment : Fragment() {
                     "Undefined"
                 }
             }
+            val foodScore = max[0].score * 100
+            val number3digits:Double = String.format("%.3f", foodScore).toDouble()
+            categoryScore = number3digits.toString()
         categoryFood = foodCategory
         }
-        cameraBinding.edCategory.text = categoryFood
+        cameraBinding.edCategory.text = categoryFood + " " + "(${categoryScore} %)"
     }
 
     override fun onRequestPermissionsResult(

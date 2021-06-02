@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.databinding.FragmentMyPostBinding
 import com.foodloop.foodloopapps.ui.mypost.detailmypost.DetailMyPostActivity
@@ -18,7 +19,7 @@ class MyPostFragment : Fragment() {
     private lateinit var homeBinding: FragmentMyPostBinding
     private lateinit var foodAdapter: MyPostAdapter
     private lateinit var vieModel: ViewModelMypost
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,9 +31,8 @@ class MyPostFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences =
-            this.activity?.getSharedPreferences("SHARE LOGIN", Context.MODE_PRIVATE) ?: preferences
-        val username = preferences.getString("USERNAME", "")
+        preferences = SharedPreference(requireActivity())
+        val username = preferences.getStringPreference("USERNAME")
         foodAdapter = MyPostAdapter()
 
         vieModel = ViewModelProvider(

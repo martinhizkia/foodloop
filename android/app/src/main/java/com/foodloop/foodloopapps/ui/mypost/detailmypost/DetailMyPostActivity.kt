@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.R
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.data.respons.InfoDetailRespons
 import com.foodloop.foodloopapps.databinding.ActivityDetailMyPostBinding
 import com.foodloop.foodloopapps.ui.mainactivity.MainActivity
@@ -22,7 +23,7 @@ class DetailMyPostActivity : AppCompatActivity() {
 
     private lateinit var detailBreadBinding: ActivityDetailMyPostBinding
     private lateinit var vieModel: DetailMyPostViewModel
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +61,8 @@ class DetailMyPostActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(BREAD_ID, idFood.toString())
 
-        preferences = this.getSharedPreferences("SHARE LOGIN", Context.MODE_PRIVATE) ?: preferences
-        val username = preferences.getString("USERNAME", "")
+        preferences = SharedPreference(this)
+        val username = preferences.getStringPreference("USERNAME")
         if (username != null) {
             vieModel.deletePost(idFood, username)
             Intent(this, MainActivity::class.java).also {

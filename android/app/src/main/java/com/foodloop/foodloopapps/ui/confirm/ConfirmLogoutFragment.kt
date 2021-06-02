@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.foodloop.foodloopapps.R
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.databinding.FragmentConfirmLogoutBinding
 import com.foodloop.foodloopapps.databinding.FragmentPopupconfirmBinding
 import com.foodloop.foodloopapps.ui.camera.CameraFragment
@@ -15,6 +16,7 @@ import com.foodloop.foodloopapps.ui.login.LoginActivity
 
 class ConfirmLogoutFragment : DialogFragment(), View.OnClickListener {
     private lateinit var popupBinding: FragmentConfirmLogoutBinding
+    private lateinit var sharedPref: SharedPreference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,7 +32,9 @@ class ConfirmLogoutFragment : DialogFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        sharedPref = SharedPreference(requireActivity())
         if (v?.id == R.id.btn_confirm){
+            sharedPref.clearSharedPreference()
             Intent(activity, LoginActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)

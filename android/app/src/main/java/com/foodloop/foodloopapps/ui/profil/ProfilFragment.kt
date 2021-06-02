@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.R
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.databinding.FragmentProfilBinding
 import com.foodloop.foodloopapps.ui.changepassword.ChangePasswordActivity
 import com.foodloop.foodloopapps.ui.confirm.ConfirmLogoutFragment
@@ -15,7 +16,7 @@ import com.foodloop.foodloopapps.ui.settings.SettingsActivity
 
 class ProfilFragment : Fragment() {
     private lateinit var profilFragment: FragmentProfilBinding
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +33,10 @@ class ProfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        preferences = this.activity?.getSharedPreferences("SHARE LOGIN", Context.MODE_PRIVATE) ?: preferences
-        val username = preferences.getString("USERNAME", "")
-        val name = preferences.getString("NAME", "")
-        val email = preferences.getString("EMAIL", "")
+        preferences = SharedPreference(requireActivity())
+        val username = preferences.getStringPreference("USERNAME")
+        val name = preferences.getStringPreference("NAME")
+        val email = preferences.getStringPreference("EMAIL")
 
         profilFragment.tvProfilUsername.text = username
         profilFragment.tvProfilFullname.text = name

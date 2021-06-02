@@ -10,16 +10,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.foodloop.foodloopapps.R
+import com.foodloop.foodloopapps.data.SharedPreference
 import com.foodloop.foodloopapps.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityBinding: ActivityMainBinding
     private lateinit var mController: NavController
+    private lateinit var preferences: SharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityBinding.root)
+        preferences = SharedPreference(this)
 
         val navHostFragment: Fragment =
             supportFragmentManager.findFragmentById(R.id.nav_container) as NavHostFragment

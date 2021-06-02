@@ -87,6 +87,7 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly-SNAPSHOT'
+    implementation 'androidx.preference:preference:1.1.1'
 //    implementation 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly-SNAPSHOT'
 //    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
 //    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
