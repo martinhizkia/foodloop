@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foodloop.foodloopapps.BuildConfig.BASE_URL
@@ -139,6 +140,7 @@ class RegistrationActivity : AppCompatActivity() {
         val password = binding.edReenterPassword.text.toString()
         val fullname = binding.edName.text.toString()
         val email = binding.edEmail.text.toString()
+        binding.progressBar.visibility = View.VISIBLE
 
         val user = ApiConfig.getApiService(BASE_URL).create(ApiService::class.java)
         user.createUser(username, password, fullname, email)
@@ -149,6 +151,7 @@ class RegistrationActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<UserRespons>, response: Response<UserRespons>) {
                     val user = response.body()
+                    binding.progressBar.visibility = View.GONE
                     user?.status?.let { Log.d("SIGNUP", it) }
                     if (user?.status == "Signup Success") {
                         Toast.makeText(

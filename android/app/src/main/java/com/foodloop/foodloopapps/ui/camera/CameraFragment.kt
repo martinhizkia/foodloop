@@ -77,7 +77,7 @@ class CameraFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cameraBinding.imgTap.setOnClickListener {
+        cameraBinding.btnCamera.setOnClickListener {
             dispatchTakePictureIntent()
         }
         cameraBinding.fromGallery.setOnClickListener {
@@ -108,7 +108,6 @@ class CameraFragment : Fragment() {
             val address: String = cameraBinding.edAddress.text.toString().trim()
             val price: String = cameraBinding.edPrice.text.toString().trim()
             val contact: String = cameraBinding.edContact.text.toString().trim()
-//            val category: String = cameraBinding.edCategory.text.toString().trim()
 
             if (nameBread.isEmpty()) {
                 cameraBinding.edName.error = getString(R.string.name_food_required)
@@ -135,11 +134,6 @@ class CameraFragment : Fragment() {
                 cameraBinding.edContact.requestFocus()
                 return@setOnClickListener
             }
-//            if (category.isEmpty()) {
-//                cameraBinding.edCategory.error = "Catagory is required"
-//                cameraBinding.edCategory.requestFocus()
-//                return@setOnClickListener
-//            }
             postInfo()
         }
 
@@ -150,6 +144,7 @@ class CameraFragment : Fragment() {
     private fun postInfo() {
         preferences = SharedPreference(requireActivity())
         val username = preferences.getStringPreference("USERNAME")
+
         val nameBread = cameraBinding.edName.text.toString()
         val description = cameraBinding.edDescription.text.toString()
         val address = cameraBinding.edAddress.text.toString()
@@ -278,7 +273,7 @@ class CameraFragment : Fragment() {
             categoryScore = number3digits.toString()
         categoryFood = foodCategory
         }
-        cameraBinding.edCategory.text = categoryFood + " " + "(${categoryScore} %)"
+        cameraBinding.edCategory.text = categoryFood
     }
 
     override fun onRequestPermissionsResult(

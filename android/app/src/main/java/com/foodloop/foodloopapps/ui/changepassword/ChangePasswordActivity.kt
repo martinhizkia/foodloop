@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.databinding.ActivityChangePasswordBinding
 import com.foodloop.foodloopapps.ui.profil.ProfilFragment
@@ -16,8 +17,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         setContentView(changePasswordActivity.root)
         supportActionBar?.title=getString(R.string.change_password)
         changePasswordActivity.btnSave.setOnClickListener {
-            val mIntent = Intent(this, ProfilFragment::class.java)
-            startActivity(mIntent)
+            Toast.makeText(this,getString(R.string.menu_invalid), Toast.LENGTH_SHORT).show()
         }
     }
 }

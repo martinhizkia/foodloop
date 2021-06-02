@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.foodloop.foodloopapps.R
@@ -12,7 +13,6 @@ import com.foodloop.foodloopapps.databinding.FragmentProfilBinding
 import com.foodloop.foodloopapps.ui.changepassword.ChangePasswordActivity
 import com.foodloop.foodloopapps.ui.confirm.ConfirmLogoutFragment
 import com.foodloop.foodloopapps.ui.editprofil.EditProfilActivity
-import com.foodloop.foodloopapps.ui.settings.SettingsActivity
 
 class ProfilFragment : Fragment() {
     private lateinit var profilFragment: FragmentProfilBinding
@@ -33,6 +33,7 @@ class ProfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         preferences = SharedPreference(requireActivity())
         val username = preferences.getStringPreference("USERNAME")
         val name = preferences.getStringPreference("NAME")
@@ -50,26 +51,26 @@ class ProfilFragment : Fragment() {
             val mIntent = Intent(activity, ChangePasswordActivity::class.java)
             startActivity(mIntent)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        activity?.menuInflater?.inflate(R.menu.top_menu, menu)
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_logout -> {
-                val mOptionDialogFragment = ConfirmLogoutFragment()
-                val mFragmentManager = childFragmentManager
-                mOptionDialogFragment.show(mFragmentManager, ConfirmLogoutFragment::class.java.simpleName)
-            }
-            R.id.menu_settings -> {
-                val mIntent = Intent(context, SettingsActivity::class.java)
-                startActivity(mIntent)
-            }
+        profilFragment.btnSettingsLanguage.setOnClickListener {
+            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(mIntent)
         }
-        return super.onOptionsItemSelected(item)
+        profilFragment.btnKebijakan.setOnClickListener {
+            val mIntent = Intent(activity, PrivacyPolicyActivity::class.java)
+            startActivity(mIntent)
+        }
+        profilFragment.btnHelp.setOnClickListener {
+            val mIntent = Intent(activity, HelpActivity::class.java)
+            startActivity(mIntent)
+        }
+        profilFragment.btnAbout.setOnClickListener {
+            val mIntent = Intent(activity, AboutActivity::class.java)
+            startActivity(mIntent)
+        }
+        profilFragment.btnLogout.setOnClickListener {
+            val mOptionDialogFragment = ConfirmLogoutFragment()
+            val mFragmentManager = childFragmentManager
+            mOptionDialogFragment.show(mFragmentManager, ConfirmLogoutFragment::class.java.simpleName)
+        }
     }
 }

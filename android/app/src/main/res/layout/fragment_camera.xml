@@ -22,7 +22,7 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/img_tap"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -31,17 +31,34 @@
             android:scaleType="fitCenter"
             android:background="#00000000"/>
 
-        <Button
-            android:id="@+id/fromGallery"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_login_active"
-            android:fontFamily="@font/roboto"
-            android:text="From gallery"
-            android:textColor="@color/white"
-            android:textSize="11sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_camera"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_login_active"
+                android:fontFamily="@font/roboto"
+                android:text="@string/from_camera"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/fromGallery"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_login_active"
+                android:fontFamily="@font/roboto"
+                android:text="@string/fromgallery"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -153,28 +170,42 @@
             android:ems="10"
             android:backgroundTint="@color/blue_dark"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/category"
-            android:textColor="@color/black"
-            android:fontFamily="@font/roboto"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_gravity="left"/>
-
-        <TextView
-            android:id="@+id/ed_category"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/category"
-            android:textColor="@color/black"
-            android:inputType="text"
-            android:textSize="16sp"
-            android:ems="10"
-            android:backgroundTint="@color/blue_dark"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/category"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_gravity="left"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_gravity="left"/>
+            <TextView
+                android:id="@+id/ed_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:inputType="text"
+                android:textSize="16sp"
+                android:ems="10"
+                android:backgroundTint="@color/blue_dark"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_share"

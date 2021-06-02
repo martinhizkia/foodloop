@@ -16,15 +16,15 @@
             android:id="@+id/img_bg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@mipmap/ic_launcher" />
+            android:background="@color/white" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginLeft="100dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_loading"
             app:civ_border_color="@color/white"
             app:civ_border_width="10dp" />
 
@@ -232,7 +232,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:indeterminateTint="@color/blue_dark"
-            android:layout_marginTop="300dp"
-            android:layout_marginLeft="150dp"/>
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 </ScrollView>

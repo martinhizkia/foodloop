@@ -69,4 +69,18 @@
     <string name="login_success">Login Success</string>
     <string name="user_already">User already exists</string>
     <string name="signup_success">Signup Success</string>
+    <string name="from_camera">From Camera</string>
+    <string name="delete_post">Your Post Has Been Deleted</string>
+    <string name="menu_invalid">Sorry, the menu is not yet available</string>
+    <string name="general_information">General Information</string>
+    <string name="public_policy">Public Policy</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="text_privacy">This page provides you with an explanation of our Policy regarding the collection, use and disclosure of Personal Data that we obtain for the FoodLoop Application/Site. Every Personal Data that has been stated in the FoodLoop Application/Site is specifically for Finarya. We use your Personal Data only for the needs of developing and improving the quality of FoodLoop services or other needs that are reasonable and do not conflict with the prevailing laws and regulations in Indonesia. By providing Personal Data on the FoodLoop Application/Site, you agree to the collection and use of the information contained in the Privacy Policy for this LinkAja Service. In using your Personal Data, Finarya can cooperate with other third parties while still paying attention to the confidentiality aspect of your Personal Data.</string>
+    <string name="information_collection_and_use">Information Collection and Use</string>
+    <string name="text_information"><p>When you use this Application, it may be possible to ask you to provide some Personal Data information which we will use to identify and contact you. Personal data information includes but is not limited to: Name, Phone number, mail, Complete address. When you use our application/site, we will also process your technical data such as internet protocol address, internet device identity (ID) or media access control address, information about the manufacturer, model, and operating system. from the device you use to access the Application/Site, Access to the camera used to add pictures, Access to contacts used to facilitate interaction with fellow users. We use this data to enable Us to deliver the functions of the Application/Site, resolve technical difficulties, provide you with the correct and up-to-date version of the Application/Site and to improve the functionality of the Application/Site</p></string>
+    <string name="security">Security</string>
+    <string name="text_security">Information security of your Personal Data is very important to us. We ensure that the information collected will be stored securely, but please note that no method of data transmission over the internet, or method of electronic storage is absolutely 100% (one hundred percent) secure. We strive to protect your Personal Data. We store your Personal Data information by: Restricting access to your Personal Data information; and Securely destroy your Personal Data information when we no longer need it for certain purposes.</string>
+    <string name="help">Help</string>
+    <string name="about_us">About Us</string>
+    <string name="show_all">Show All</string>
 </resources>

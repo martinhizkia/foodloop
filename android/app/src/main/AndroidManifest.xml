@@ -16,13 +16,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodLoopApps"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.settings.SettingsActivity"
-            android:parentActivityName=".ui.settings.SettingsActivity">
+        <activity android:name=".ui.listfood.ListFoodActivity"
+            android:parentActivityName=".ui.listfood.ListFoodActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.settings.SettingsActivity" />
+                android:value=".ui.listfood.ListFoodActivity" />
         </activity>
-        <activity android:name=".ui.mypost.detailmypost.DetailMyPostActivity" />
+        <activity
+            android:name=".ui.profil.AboutActivity"
+            android:parentActivityName=".ui.profil.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.profil.AboutActivity" />
+        </activity>
+        <activity
+            android:name=".ui.profil.HelpActivity"
+            android:parentActivityName=".ui.profil.HelpActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.profil.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".ui.profil.PrivacyPolicyActivity"
+            android:parentActivityName=".ui.profil.PrivacyPolicyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.profil.PrivacyPolicyActivity" />
+        </activity>
+        <activity
+            android:name=".ui.mypost.detailmypost.DetailMyPostActivity"
+            android:parentActivityName=".ui.mypost.detailmypost.DetailMyPostActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.mypost.detailmypost.DetailMyPostActivity" />
+        </activity>
         <activity
             android:name=".ui.changepassword.ChangePasswordActivity"
             android:parentActivityName=".ui.changepassword.ChangePasswordActivity">

@@ -70,6 +70,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
+    //firebase
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
     implementation platform('com.google.cloud:libraries-bom:20.5.0')
     implementation 'com.google.cloud:google-cloud-storage'
@@ -87,11 +90,7 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly-SNAPSHOT'
-    implementation 'androidx.preference:preference:1.1.1'
-//    implementation 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly-SNAPSHOT'
-//    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
-//    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
-//    implementation 'org.tensorflow:tensorflow-lite:2.5.0'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
     //testing
     testImplementation 'junit:junit:4.+'

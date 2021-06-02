@@ -1,10 +1,14 @@
 package com.foodloop.foodloopapps.ui.login
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.BuildConfig.BASE_URL
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.SharedPreference
@@ -17,7 +21,7 @@ import com.foodloop.foodloopapps.ui.registration.RegistrationActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -31,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPref = SharedPreference(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
 
         binding.btnLogin.setOnClickListener {
@@ -60,6 +65,8 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.edUsername.text.toString()
         val password = binding.edPassword.text.toString()
 
+        binding.progressBar.visibility = View.VISIBLE
+
         val user = ApiConfig.getApiService(BASE_URL).create(ApiService::class.java)
         user.postLogin(username, password)
             .enqueue(object : Callback<UserRespons> {
@@ -69,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<UserRespons>, response: Response<UserRespons>) {
                     val user = response.body()
+                    binding.progressBar.visibility = View.GONE
                     user?.status?.let { Log.d("LOGIN", it) }
                         if (user?.status == "Wrong Username"){
                             Toast.makeText(
@@ -102,5 +110,3 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 }
-
-

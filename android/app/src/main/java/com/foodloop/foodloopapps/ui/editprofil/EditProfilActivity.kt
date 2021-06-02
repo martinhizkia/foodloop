@@ -3,6 +3,7 @@ package com.foodloop.foodloopapps.ui.editprofil
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.databinding.ActivityEditProfilBinding
 import com.foodloop.foodloopapps.ui.login.LoginActivity
@@ -18,8 +19,7 @@ class EditProfilActivity : AppCompatActivity() {
 
         supportActionBar?.title=getString(R.string.edit_profil)
         editProfilBinding.btnSave.setOnClickListener {
-            val mIntent = Intent(this, ProfilFragment::class.java)
-            startActivity(mIntent)
+            Toast.makeText(this,getString(R.string.menu_invalid), Toast.LENGTH_SHORT).show()
         }
     }
 }
