@@ -200,14 +200,15 @@ class CameraFragment : Fragment() {
         val data = baos.toByteArray()
         val uploadTask = imageRef.putBytes(data)
         uploadTask.addOnFailureListener {
-            Toast.makeText(activity, "fail to upload", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Failed to Upload", Toast.LENGTH_LONG).show()
         }.addOnSuccessListener {
             DOWNLOAD_URL =
                 "https://storage.googleapis.com/foodloop-313715.appspot.com/img/${imagePath}"
-            Toast.makeText(activity, DOWNLOAD_URL, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Food Uploaded", Toast.LENGTH_LONG).show()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -273,7 +274,7 @@ class CameraFragment : Fragment() {
             categoryScore = number3digits.toString()
         categoryFood = foodCategory
         }
-        cameraBinding.edCategory.text = categoryFood
+        cameraBinding.edCategory.text = "${categoryFood} (${categoryScore} %)"
     }
 
     override fun onRequestPermissionsResult(

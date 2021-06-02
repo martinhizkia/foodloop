@@ -5,17 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".ui.profil.AboutActivity">
 
+
     <TextView
+        android:id="@+id/aboutus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="0dp"
         android:fontFamily="@font/roboto"
         android:text="@string/about_us"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/aboutustext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:fontFamily="@font/roboto"
+        android:justificationMode="inter_word"
+        android:text="@string/text_aboutus"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="150dp"
+        android:src="@drawable/logo" />
+
 
 </LinearLayout>

@@ -73,14 +73,20 @@
     <string name="delete_post">Postingan Anda Telah Dihapus</string>
     <string name="menu_invalid">Maaf Menu Belom Tersedia</string>
     <string name="general_information">Informasi Umum</string>
-    <string name="public_policy">Kebijakan publik</string>
+    <string name="public_policy">Kebijakan Privasi</string>
     <string name="privacy_policy">Kebijakan pribadi</string>
     <string name="text_privacy">Halaman ini memberikan penjelasan kepada Anda mengenai Kebijakan kami terkait dengan pengumpulan, penggunaan dan pengungkapan Data Pribadi yang kami dapat untuk Aplikasi/Situs FoodLoop. Setiap Data Pribadi yang telah dituangkan di Aplikasi /Situs FoodLoop diperuntukkan khusus untuk Finarya. Kami menggunakan Data Pribadi Anda hanya untuk kebutuhan pengembangan dan peningkatan kualitas layanan FoodLoop atau kebutuhan lainnya yang wajar dan tidak bertentangan dengan peraturan perundang-undangan yang berlaku di Indonesia. Dengan memberikan Data Pribadi pada Aplikasi/Situs FoodLoop, Anda setuju atas pengumpulan dan penggunaan informasi yang tertuang di dalam Kebijakan Privasi untuk Layanan LinkAja ini. Dalam menggunakan Data Pribadi Anda, Finarya dapat bekerjasama dengan pihak ketiga lain dengan tetap memperhatikan aspek kerahasiaan atas Data Pribadi Anda.</string>
     <string name="information_collection_and_use">Pengumpulan dan Penggunaan Informasi</string>
     <string name="text_information"><p>Pada saat Anda menggunakan Aplikasi ini, dimungkinkan akan meminta Anda untuk memberikan beberapa informasi Data Pribadi yang akan kami gunakan untuk mengidentifikasi dan menghubungi Anda. Informasi data pribadi termasuk namun tidak terbatas pada: Nama, Nomor Ponsel, Email, Alamat lengkap. Ketika Anda menggunakan Aplikasi/Situs Kami, Kami juga akan melakukan pemrosesan pada data teknis Anda seperti, internet protocol address, identitas (ID) perangkat internet atau alamat kontrol akses media (media access control address), informasi mengenai pabrikan, model, dan sistem operasi dari perangkat yang Anda gunakan untuk mengakses Aplikasi/Situs, Akses ke kamera yang digunakan untuk tambah gambar, Akses ke kontak yang digunakan untuk mempermudah interaksi dengan sesama pengguna. Kami menggunakan data ini untuk memungkinkan Kami mengirimkan fungsi-fungsi dari Aplikasi/Situs, menyelesaikan kesulitan-kesulitan teknis, menyediakan bagi Anda versi Aplikasi/Situs yang benar dan terkini serta untuk meningkatkan fungsi Aplikasi/Situs.</p></string>
     <string name="security">Keamanan</string>
     <string name="text_security">Keamanan informasi Data Pribadi Anda adalah hal yang sangat penting bagi kami. Kami memastikan bahwa informasi yang dikumpulkan akan disimpan dengan aman, namun harap diketahui bahwa tidak ada metode menyangkut transmisi data melalui internet, atau metode penyimpanan elektronik yang benar-benar 100% (seratus persen) aman. Kami berusaha untuk melindungi Data Pribadi Anda. Kami menyimpan informasi Data Pribadi Anda dengan cara: Membatasi akses ke dalam informasi Data Pribadi Anda; dan Secara aman menghancurkan informasi Data Pribadi Anda saat kami tidak lagi membutuhkannya untuk tujuan tertentu.</string>
-    <string name="help">Bantuan</string>
+    <string name="help">How To Use</string>
     <string name="about_us">Tentang Kami</string>
     <string name="show_all">Tampilkan semua</string>
+    <string name="text_aboutus">FoodLoop dibuat dalam rangka memenuhi Proyek Capstone Bangkit. Aplikasi ini terdiri dari tiga jalur pembelajaran (Androd, Cloud Computing, dan Machine Learning) implementasi. Tim kami terdiri dari: Tim Android (Ade dan Khoirul), Tim Cloud (Martin dan Alza), dan Tim Machine Learning (Hadyan)</string>
+    <string name="step1">1. Buka Aplikasi</string>
+    <string name="step2">2. Ambil Gambar Makanan atau Ambil dari Galeri</string>
+    <string name="step3">3. Isi Keterangan Makanan</string>
+    <string name="step4">4. Tekan Tombol Upload</string>
+    <string name="step5">5. Makanan Anda Sudah Terlihat Secara Umum</string>
 </resources>
