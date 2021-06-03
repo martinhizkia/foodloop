@@ -1,9 +1,8 @@
 package com.foodloop.foodloopapps.ui.mypost
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +32,9 @@ class MyPostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         preferences = SharedPreference(requireActivity())
         val username = preferences.getStringPreference("USERNAME")
+
+        homeBinding.progressBar.visibility = View.VISIBLE
+        
         foodAdapter = MyPostAdapter()
 
         vieModel = ViewModelProvider(
@@ -40,17 +42,10 @@ class MyPostFragment : Fragment() {
             ViewModelProvider.NewInstanceFactory()
         ).get(ViewModelMypost::class.java)
 
-        homeBinding.apply {
-            rvMypost.layoutManager = LinearLayoutManager(activity)
-            rvMypost.setHasFixedSize(true)
-            rvMypost.adapter = foodAdapter
-        }
-
         username?.let { vieModel.setMypost(it) }
         vieModel.getMypost().observe(viewLifecycleOwner, {
             if (it != null) {
-                homeBinding.progressBar.visibility = View.GONE
-                foodAdapter.setbread(it)
+                showListMyPost(it)
             }
         })
         with(foodAdapter) {
@@ -63,6 +58,29 @@ class MyPostFragment : Fragment() {
                     }
                 }
             })
+        }
+    }
+
+    private fun showListMyPost(it: ArrayList<InfoDetailRespons>) {
+        foodAdapter.setbread(it)
+        when (it.size) {
+            0 -> {
+                homeBinding?.apply {
+                    progressBar.visibility = View.GONE
+                    imgError.visibility = View.VISIBLE
+                }
+            }
+            else -> {
+                homeBinding?.apply {
+                    progressBar.visibility = View.GONE
+                    imgError.visibility = View.GONE
+                }
+                homeBinding.apply {
+                    rvMypost.layoutManager = LinearLayoutManager(activity)
+                    rvMypost.setHasFixedSize(true)
+                    rvMypost.adapter = foodAdapter
+                }
+            }
         }
     }
 }

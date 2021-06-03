@@ -1,14 +1,11 @@
 package com.foodloop.foodloopapps.ui.login
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.foodloop.foodloopapps.BuildConfig
 import com.foodloop.foodloopapps.BuildConfig.BASE_URL
 import com.foodloop.foodloopapps.R
 import com.foodloop.foodloopapps.data.SharedPreference
@@ -21,12 +18,9 @@ import com.foodloop.foodloopapps.ui.registration.RegistrationActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private var PRIVATE_MODE = 0
-    private val PREF_NAME = "USER INFO"
     private lateinit var sharedPref: SharedPreference
 
 
@@ -39,15 +33,15 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.btnLogin.setOnClickListener {
-            val username : String = binding.edUsername.text.toString().trim()
-            val password : String = binding.edPassword.text.toString().trim()
+            val username: String = binding.edUsername.text.toString().trim()
+            val password: String = binding.edPassword.text.toString().trim()
 
-            if (username.isEmpty()){
+            if (username.isEmpty()) {
                 binding.edUsername.error = getString(R.string.user_required)
                 binding.edUsername.requestFocus()
                 return@setOnClickListener
             }
-            if (password.isEmpty()){
+            if (password.isEmpty()) {
                 binding.edPassword.error = getString(R.string.password_required)
                 binding.edPassword.requestFocus()
                 return@setOnClickListener
@@ -78,34 +72,39 @@ class LoginActivity : AppCompatActivity() {
                     val user = response.body()
                     binding.progressBar.visibility = View.GONE
                     user?.status?.let { Log.d("LOGIN", it) }
-                        if (user?.status == "Wrong Username"){
-                            Toast.makeText(
-                                this@LoginActivity,
-                                getString(R.string.user_wrong),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }else if (user?.status == "Wrong Password"){
-                            Toast.makeText(
-                                this@LoginActivity,
-                                getString(R.string.wrong_pass),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }else{
-                            Toast.makeText(
-                                this@LoginActivity,
-                                getString(R.string.login_success),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            user?.email?.let { user.fullname?.let { it1 ->
-                                sharedPref.saveUser(username, it,
-                                    it1,true)
-                            } }
-                            Intent(this@LoginActivity, MainActivity::class.java).also {
-                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(it)
+                    if (user?.status == "Wrong Username") {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.user_wrong),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (user?.status == "Wrong Password") {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.wrong_pass),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.login_success),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        user?.email?.let {
+                            user.fullname?.let { it1 ->
+                                sharedPref.saveUser(
+                                    username, it,
+                                    it1, true
+                                )
                             }
-                            finish()
                         }
+                        Intent(this@LoginActivity, MainActivity::class.java).also {
+                            it.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                        finish()
+                    }
                 }
             })
     }

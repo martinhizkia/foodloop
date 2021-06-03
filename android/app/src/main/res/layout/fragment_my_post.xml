@@ -12,10 +12,22 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/list_myfood"/>
 
+    <ImageView
+        android:id="@+id/img_error"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_pnf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_gravity="center_vertical|center_horizontal"
         android:indeterminateTint="@color/blue_dark"
         app:layout_constraintBottom_toBottomOf="parent"
