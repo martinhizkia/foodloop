@@ -1,1 +1,0 @@
-## FoodLoop Image Documentation
